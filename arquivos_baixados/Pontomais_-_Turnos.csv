@@ -1,0 +1,217 @@
+Relatório de Turnos
+Por SISTEMA BOT em 08/11/2025
+
+Código,Descrição,Dia,1ª Entrada prevista,1ª Saída prevista,2ª Entrada prevista,2ª Saída prevista,Ignora feriados,Intervalo flexível,Intervalo pré-assinalado,Saída (Intervalo principal),Retorno (Intervalo principal),Jornada flexível,Limite de horas extras,Status,Tipo,Tolerância em jornada flexível,Turno avançado,Virada do turno
+0001,ADM,Domingo,,,,,Não,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,03:00
+0001,ADM,Segunda-feira,08:00,12:00,14:00,18:00,Não,Sim,Não,12:00,14:00,Sim,23:59,Ativo,Semanal,Não,Não,06:00
+0001,ADM,Terça-feira,08:00,12:00,14:00,18:00,Não,Sim,Não,12:00,14:00,Sim,23:59,Ativo,Semanal,Não,Não,06:00
+0001,ADM,Quarta-feira,08:00,12:00,14:00,18:00,Não,Sim,Não,12:00,14:00,Sim,23:59,Ativo,Semanal,Não,Não,06:00
+0001,ADM,Quinta-feira,08:00,12:00,14:00,18:00,Não,Sim,Não,12:00,14:00,Sim,23:59,Ativo,Semanal,Não,Não,06:00
+0001,ADM,Sexta-feira,08:00,12:00,14:00,18:00,Não,Sim,Não,12:00,14:00,Sim,23:59,Ativo,Semanal,Não,Não,06:00
+0001,ADM,Sábado,08:00,12:00,,,Não,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,03:00
+002,NOTURNO 12x36,Dia 1,18:00,21:00,22:00,06:00,Sim,Sim,Não,21:00,22:00,Sim,23:59,Ativo,12h/36h,Não,Não,08:10
+002,NOTURNO 12x36,Folga,,,,,Sim,Sim,Não,,,Sim,23:59,Ativo,12h/36h,Não,Não,08:10
+003,TURNO 11 (40H/SEM - 7H/D),Domingo,,,,,Não,Sim,Não,,,Sim,02:00,Ativo,Semanal,Não,Não,23:59
+003,TURNO 11 (40H/SEM - 7H/D),Segunda-feira,08:00,12:00,13:00,16:00,Não,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,23:59
+003,TURNO 11 (40H/SEM - 7H/D),Terça-feira,08:00,12:00,13:00,16:00,Não,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,23:59
+003,TURNO 11 (40H/SEM - 7H/D),Quarta-feira,08:00,12:00,13:00,16:00,Não,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,23:59
+003,TURNO 11 (40H/SEM - 7H/D),Quinta-feira,08:00,12:00,13:00,16:00,Não,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,23:59
+003,TURNO 11 (40H/SEM - 7H/D),Sexta-feira,08:00,12:00,13:00,16:00,Não,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,23:59
+003,TURNO 11 (40H/SEM - 7H/D),Sábado,08:00,13:00,,,Não,Sim,Não,,,Sim,02:00,Ativo,Semanal,Não,Não,23:59
+004,PLANTÃO,Dia 1,22:00,01:00,02:00,06:00,Não,Sim,Não,,,Sim,23:59,Ativo,Customizado,Não,Não,12:00
+004,PLANTÃO,Dia 2,,,,,Não,Sim,Não,,,Sim,23:59,Ativo,Customizado,Não,Não,23:59
+004,PLANTÃO,Dia 3,,,,,Não,Sim,Não,,,Sim,23:59,Ativo,Customizado,Não,Não,23:59
+005,ADM/07:20H-DIA,Domingo,,,,,Não,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,04:00
+005,ADM/07:20H-DIA,Segunda-feira,08:00,12:00,13:00,16:20,Não,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,04:00
+005,ADM/07:20H-DIA,Terça-feira,08:00,12:00,13:00,16:20,Não,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,04:00
+005,ADM/07:20H-DIA,Quarta-feira,08:00,12:00,13:00,16:20,Não,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,04:00
+005,ADM/07:20H-DIA,Quinta-feira,08:00,12:00,13:00,16:20,Não,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,04:00
+005,ADM/07:20H-DIA,Sexta-feira,08:00,12:00,13:00,16:20,Não,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,04:00
+005,ADM/07:20H-DIA,Sábado,08:00,12:00,13:00,16:20,Não,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,04:00
+0006,AVISO/REDUÇÃO(ADM),Domingo,,,,,Não,Sim,Não,,,Sim,02:00,Ativo,Semanal,Não,Não,23:59
+0006,AVISO/REDUÇÃO(ADM),Segunda-feira,08:00,12:00,13:00,15:00,Não,Sim,Não,,,Sim,02:00,Ativo,Semanal,Não,Não,23:59
+0006,AVISO/REDUÇÃO(ADM),Terça-feira,08:00,12:00,13:00,15:00,Não,Sim,Não,,,Sim,02:00,Ativo,Semanal,Não,Não,23:59
+0006,AVISO/REDUÇÃO(ADM),Quarta-feira,08:00,12:00,13:00,15:00,Não,Sim,Não,,,Sim,02:00,Ativo,Semanal,Não,Não,23:59
+0006,AVISO/REDUÇÃO(ADM),Quinta-feira,08:00,12:00,13:00,15:00,Não,Sim,Não,,,Sim,02:00,Ativo,Semanal,Não,Não,23:59
+0006,AVISO/REDUÇÃO(ADM),Sexta-feira,08:00,12:00,13:00,15:00,Não,Sim,Não,,,Sim,02:00,Ativo,Semanal,Não,Não,23:59
+0006,AVISO/REDUÇÃO(ADM),Sábado,08:00,10:00,,,Não,Sim,Não,,,Sim,02:00,Ativo,Semanal,Não,Não,23:59
+011,TURNO 17 ( 6 H/seg a sex ),Domingo,,,,,Não,Sim,Não,,,Sim,00:00,Ativo,Semanal,Não,Não,23:59
+011,TURNO 17 ( 6 H/seg a sex ),Segunda-feira,08:00,11:45,12:00,14:15,Não,Sim,Não,11:45,12:00,Sim,00:00,Ativo,Semanal,Não,Não,23:59
+011,TURNO 17 ( 6 H/seg a sex ),Terça-feira,08:00,11:45,12:00,14:15,Não,Sim,Não,11:45,12:00,Sim,00:00,Ativo,Semanal,Não,Não,23:59
+011,TURNO 17 ( 6 H/seg a sex ),Quarta-feira,08:00,11:45,12:00,14:15,Não,Sim,Não,11:45,12:00,Sim,00:00,Ativo,Semanal,Não,Não,23:59
+011,TURNO 17 ( 6 H/seg a sex ),Quinta-feira,08:00,11:45,12:00,14:15,Não,Sim,Não,11:45,12:00,Sim,00:00,Ativo,Semanal,Não,Não,23:59
+011,TURNO 17 ( 6 H/seg a sex ),Sexta-feira,08:00,11:45,12:00,14:15,Não,Sim,Não,11:45,12:00,Sim,00:00,Ativo,Semanal,Não,Não,23:59
+011,TURNO 17 ( 6 H/seg a sex ),Sábado,,,,,Não,Sim,Não,,,Sim,00:00,Ativo,Semanal,Não,Não,23:59
+012,TURNO DE 06:20h,Domingo,07:00,12:00,13:00,14:20,Não,Sim,Não,12:00,13:00,Sim,23:59,Ativo,Semanal,Não,Não,23:59
+012,TURNO DE 06:20h,Segunda-feira,07:00,12:00,13:00,14:20,Não,Sim,Não,12:00,13:00,Sim,23:59,Ativo,Semanal,Não,Não,23:59
+012,TURNO DE 06:20h,Terça-feira,07:00,12:00,13:00,14:20,Não,Sim,Não,12:00,13:00,Sim,23:59,Ativo,Semanal,Não,Não,23:59
+012,TURNO DE 06:20h,Quarta-feira,07:00,12:00,13:00,14:20,Não,Sim,Não,12:00,13:00,Sim,23:59,Ativo,Semanal,Não,Não,23:59
+012,TURNO DE 06:20h,Quinta-feira,07:00,12:00,13:00,14:20,Não,Sim,Não,12:00,13:00,Sim,23:59,Ativo,Semanal,Não,Não,23:59
+012,TURNO DE 06:20h,Sexta-feira,07:00,12:00,13:00,14:20,Não,Sim,Não,12:00,13:00,Sim,23:59,Ativo,Semanal,Não,Não,23:59
+012,TURNO DE 06:20h,Sábado,07:00,12:00,13:00,14:20,Não,Sim,Não,12:00,13:00,Sim,23:59,Ativo,Semanal,Não,Não,23:59
+013,LICENÇA AMAMENTAÇÃO - ADM,Domingo,,,,,Não,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,23:59
+013,LICENÇA AMAMENTAÇÃO - ADM,Segunda-feira,08:00,12:00,14:00,17:00,Não,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,23:59
+013,LICENÇA AMAMENTAÇÃO - ADM,Terça-feira,08:00,12:00,14:00,17:00,Não,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,23:59
+013,LICENÇA AMAMENTAÇÃO - ADM,Quarta-feira,08:00,12:00,14:00,17:00,Não,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,23:59
+013,LICENÇA AMAMENTAÇÃO - ADM,Quinta-feira,08:00,12:00,14:00,17:00,Não,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,23:59
+013,LICENÇA AMAMENTAÇÃO - ADM,Sexta-feira,08:00,12:00,14:00,17:00,Não,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,23:59
+013,LICENÇA AMAMENTAÇÃO - ADM,Sábado,08:00,11:30,,,Não,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,23:59
+014,TURNO 14 (42 HORAS ),Domingo,,,,,Não,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,03:00
+014,TURNO 14 (42 HORAS ),Segunda-feira,14:00,18:00,19:00,22:00,Não,Sim,Não,18:00,19:00,Sim,23:59,Ativo,Semanal,Não,Não,03:00
+014,TURNO 14 (42 HORAS ),Terça-feira,14:00,18:00,19:00,22:00,Não,Sim,Não,18:00,19:00,Sim,23:59,Ativo,Semanal,Não,Não,03:00
+014,TURNO 14 (42 HORAS ),Quarta-feira,14:00,18:00,19:00,22:00,Não,Sim,Não,18:00,19:00,Sim,23:59,Ativo,Semanal,Não,Não,03:00
+014,TURNO 14 (42 HORAS ),Quinta-feira,14:00,18:00,19:00,22:00,Não,Sim,Não,18:00,19:00,Sim,23:59,Ativo,Semanal,Não,Não,03:00
+014,TURNO 14 (42 HORAS ),Sexta-feira,14:00,18:00,19:00,22:00,Não,Sim,Não,18:00,19:00,Sim,23:59,Ativo,Semanal,Não,Não,03:00
+014,TURNO 14 (42 HORAS ),Sábado,14:00,18:00,19:00,22:00,Não,Sim,Não,18:00,19:00,Sim,23:59,Ativo,Semanal,Não,Não,03:00
+015,APRENDIZ (20H -TH),Domingo,,,,,Não,Sim,Não,,,Sim,02:00,Ativo,Semanal,Não,Não,23:59
+015,APRENDIZ (20H -TH),Segunda-feira,,,,,Não,Sim,Não,,,Sim,02:00,Ativo,Semanal,Não,Não,23:59
+015,APRENDIZ (20H -TH),Terça-feira,,,,,Não,Sim,Não,,,Sim,02:00,Ativo,Semanal,Não,Não,23:59
+015,APRENDIZ (20H -TH),Quarta-feira,08:00,11:00,11:15,13:15,Não,Sim,Não,,,Sim,02:00,Ativo,Semanal,Não,Não,23:59
+015,APRENDIZ (20H -TH),Quinta-feira,08:00,11:00,11:15,13:15,Não,Sim,Não,,,Sim,02:00,Ativo,Semanal,Não,Não,23:59
+015,APRENDIZ (20H -TH),Sexta-feira,08:00,11:00,11:15,13:15,Não,Sim,Não,,,Sim,02:00,Ativo,Semanal,Não,Não,23:59
+015,APRENDIZ (20H -TH),Sábado,08:00,11:00,11:15,13:15,Não,Sim,Não,,,Sim,02:00,Ativo,Semanal,Não,Não,23:59
+016,TURNO 11 (36H/SEMANAIS),Domingo,,,,,Não,Sim,Não,,,Sim,02:00,Ativo,Semanal,Não,Não,23:59
+016,TURNO 11 (36H/SEMANAIS),Segunda-feira,08:00,12:00,12:15,14:15,Não,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,23:59
+016,TURNO 11 (36H/SEMANAIS),Terça-feira,08:00,12:00,12:15,14:15,Não,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,23:59
+016,TURNO 11 (36H/SEMANAIS),Quarta-feira,08:00,12:00,12:15,14:15,Não,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,23:59
+016,TURNO 11 (36H/SEMANAIS),Quinta-feira,08:00,12:00,12:15,14:15,Não,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,23:59
+016,TURNO 11 (36H/SEMANAIS),Sexta-feira,08:00,12:00,12:15,14:15,Não,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,23:59
+016,TURNO 11 (36H/SEMANAIS),Sábado,08:00,12:00,12:15,14:15,Não,Sim,Não,,,Sim,02:00,Ativo,Semanal,Não,Não,23:59
+017,TURNO 17 (30H/5H D),Domingo,,,,,Não,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,23:59
+017,TURNO 17 (30H/5H D),Segunda-feira,16:00,19:00,19:15,21:15,Não,Sim,Não,19:00,19:15,Sim,23:59,Ativo,Semanal,Não,Não,23:59
+017,TURNO 17 (30H/5H D),Terça-feira,16:00,19:00,19:15,21:15,Não,Sim,Não,19:00,19:15,Sim,23:59,Ativo,Semanal,Não,Não,23:59
+017,TURNO 17 (30H/5H D),Quarta-feira,16:00,19:00,19:15,21:15,Não,Sim,Não,19:00,19:15,Sim,23:59,Ativo,Semanal,Não,Não,23:59
+017,TURNO 17 (30H/5H D),Quinta-feira,16:00,19:00,19:15,21:15,Não,Sim,Não,19:00,19:15,Sim,23:59,Ativo,Semanal,Não,Não,23:59
+017,TURNO 17 (30H/5H D),Sexta-feira,16:00,19:00,19:15,21:15,Não,Sim,Não,19:00,19:15,Sim,23:59,Ativo,Semanal,Não,Não,23:59
+017,TURNO 17 (30H/5H D),Sábado,16:00,19:00,19:15,21:15,Não,Sim,Não,19:00,19:15,Sim,23:59,Ativo,Semanal,Não,Não,23:59
+018,DOMINGO,Domingo,08:00,12:00,14:00,18:00,Sim,Sim,Não,12:00,14:00,Sim,23:59,Ativo,Semanal,Não,Não,23:59
+018,DOMINGO,Segunda-feira,,,,,Sim,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,23:59
+018,DOMINGO,Terça-feira,,,,,Sim,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,23:59
+018,DOMINGO,Quarta-feira,,,,,Sim,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,23:59
+018,DOMINGO,Quinta-feira,,,,,Sim,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,23:59
+018,DOMINGO,Sexta-feira,,,,,Sim,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,23:59
+018,DOMINGO,Sábado,,,,,Sim,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,23:59
+019,JOVEM APRENDIZ (20h_R),Domingo,,,,,Não,Sim,Não,,,Sim,00:00,Ativo,Semanal,Não,Não,23:59
+019,JOVEM APRENDIZ (20h_R),Segunda-feira,,,,,Não,Sim,Não,,,Sim,00:00,Ativo,Semanal,Não,Não,23:59
+019,JOVEM APRENDIZ (20h_R),Terça-feira,,,,,Não,Sim,Não,,,Sim,00:00,Ativo,Semanal,Não,Não,23:59
+019,JOVEM APRENDIZ (20h_R),Quarta-feira,08:00,12:00,,,Não,Sim,Não,,,Sim,00:00,Ativo,Semanal,Não,Não,23:59
+019,JOVEM APRENDIZ (20h_R),Quinta-feira,08:00,12:00,,,Não,Sim,Não,,,Sim,00:00,Ativo,Semanal,Não,Não,23:59
+019,JOVEM APRENDIZ (20h_R),Sexta-feira,08:00,12:00,,,Não,Sim,Não,,,Sim,00:00,Ativo,Semanal,Não,Não,23:59
+019,JOVEM APRENDIZ (20h_R),Sábado,08:00,12:00,,,Não,Sim,Não,,,Sim,00:00,Ativo,Semanal,Não,Não,23:59
+020,JOVEM APRENDIZ (20H),Domingo,,,,,Não,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,23:59
+020,JOVEM APRENDIZ (20H),Segunda-feira,,,,,Não,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,23:59
+020,JOVEM APRENDIZ (20H),Terça-feira,08:00,12:00,,,Não,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,23:59
+020,JOVEM APRENDIZ (20H),Quarta-feira,08:00,12:00,,,Não,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,23:59
+020,JOVEM APRENDIZ (20H),Quinta-feira,08:00,12:00,,,Não,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,23:59
+020,JOVEM APRENDIZ (20H),Sexta-feira,08:00,12:00,,,Não,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,23:59
+020,JOVEM APRENDIZ (20H),Sábado,,,,,Não,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,23:59
+021,JOVEM APRENDIZ (24H),Domingo,,,,,Não,Sim,Não,,,Sim,02:00,Ativo,Semanal,Não,Não,23:59
+021,JOVEM APRENDIZ (24H),Segunda-feira,,,,,Não,Sim,Não,,,Sim,00:00,Ativo,Semanal,Não,Não,03:00
+021,JOVEM APRENDIZ (24H),Terça-feira,,,,,Não,Sim,Não,,,Sim,00:00,Ativo,Semanal,Não,Não,03:00
+021,JOVEM APRENDIZ (24H),Quarta-feira,08:00,12:00,13:00,15:00,Não,Sim,Não,,,Sim,00:00,Ativo,Semanal,Não,Não,03:00
+021,JOVEM APRENDIZ (24H),Quinta-feira,08:00,12:00,13:00,15:00,Não,Sim,Não,,,Sim,00:00,Ativo,Semanal,Não,Não,03:00
+021,JOVEM APRENDIZ (24H),Sexta-feira,08:00,12:00,13:00,15:00,Não,Sim,Não,,,Sim,00:00,Ativo,Semanal,Não,Não,03:00
+021,JOVEM APRENDIZ (24H),Sábado,08:00,12:00,13:00,15:00,Não,Sim,Não,,,Sim,00:00,Ativo,Semanal,Não,Não,03:00
+022,42H SEMANAL - PS,Domingo,08:00,11:00,11:30,15:30,Não,Sim,Não,,,Sim,00:00,Ativo,Semanal,Sim,Não,05:00
+022,42H SEMANAL - PS,Segunda-feira,08:00,11:00,11:30,15:30,Não,Sim,Não,,,Sim,00:00,Ativo,Semanal,Sim,Não,05:00
+022,42H SEMANAL - PS,Terça-feira,08:00,11:00,11:30,15:30,Não,Sim,Não,,,Sim,00:00,Ativo,Semanal,Sim,Não,05:00
+022,42H SEMANAL - PS,Quarta-feira,08:00,11:00,11:30,15:30,Não,Sim,Não,,,Sim,00:00,Ativo,Semanal,Sim,Não,05:00
+022,42H SEMANAL - PS,Quinta-feira,08:00,11:00,11:30,15:30,Não,Sim,Não,,,Sim,00:00,Ativo,Semanal,Sim,Não,05:00
+022,42H SEMANAL - PS,Sexta-feira,08:00,11:00,11:30,15:30,Não,Sim,Não,,,Sim,00:00,Ativo,Semanal,Sim,Não,05:00
+022,42H SEMANAL - PS,Sábado,08:00,11:00,11:30,15:30,Não,Sim,Não,,,Sim,00:00,Ativo,Semanal,Sim,Não,05:00
+023,JOVEM APRENDIZ (16H),Domingo,,,,,Não,Sim,Não,,,Sim,02:00,Ativo,Semanal,Não,Não,23:59
+023,JOVEM APRENDIZ (16H),Segunda-feira,,,,,Não,Sim,Não,,,Sim,02:00,Ativo,Semanal,Não,Não,23:59
+023,JOVEM APRENDIZ (16H),Terça-feira,08:00,12:00,,,Não,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,23:59
+023,JOVEM APRENDIZ (16H),Quarta-feira,08:00,12:00,,,Não,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,23:59
+023,JOVEM APRENDIZ (16H),Quinta-feira,08:00,12:00,,,Não,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,23:59
+023,JOVEM APRENDIZ (16H),Sexta-feira,08:00,12:00,,,Não,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,23:59
+023,JOVEM APRENDIZ (16H),Sábado,,,,,Não,Sim,Não,,,Sim,02:00,Ativo,Semanal,Não,Não,23:59
+024,TURNO 5 (34H/SEMANAIS),Domingo,,,,,Não,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,02:00
+024,TURNO 5 (34H/SEMANAIS),Segunda-feira,08:00,12:00,12:15,14:15,Não,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,02:00
+024,TURNO 5 (34H/SEMANAIS),Terça-feira,08:00,12:00,12:15,14:15,Não,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,02:00
+024,TURNO 5 (34H/SEMANAIS),Quarta-feira,08:00,12:00,12:15,14:15,Não,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,02:00
+024,TURNO 5 (34H/SEMANAIS),Quinta-feira,08:00,12:00,12:15,14:15,Não,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,02:00
+024,TURNO 5 (34H/SEMANAIS),Sexta-feira,08:00,12:00,12:15,14:15,Não,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,02:00
+024,TURNO 5 (34H/SEMANAIS),Sábado,08:00,12:00,,,Não,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,02:00
+025,AVISO/REDUÇÃO DE HORAS,Domingo,07:00,10:00,11:00,13:20,Não,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,23:59
+025,AVISO/REDUÇÃO DE HORAS,Segunda-feira,07:00,10:00,11:00,13:20,Não,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,23:59
+025,AVISO/REDUÇÃO DE HORAS,Terça-feira,07:00,10:00,11:00,13:20,Não,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,23:59
+025,AVISO/REDUÇÃO DE HORAS,Quarta-feira,07:00,10:00,11:00,13:20,Não,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,23:59
+025,AVISO/REDUÇÃO DE HORAS,Quinta-feira,07:00,10:00,11:00,13:20,Não,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,23:59
+025,AVISO/REDUÇÃO DE HORAS,Sexta-feira,07:00,10:00,11:00,13:20,Não,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,23:59
+025,AVISO/REDUÇÃO DE HORAS,Sábado,07:00,10:00,11:00,13:20,Não,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,23:59
+026,TURNO NOT - PS,Domingo,00:00,04:00,04:30,07:30,Não,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,23:59
+026,TURNO NOT - PS,Segunda-feira,00:00,04:00,04:30,07:30,Não,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,09:00
+026,TURNO NOT - PS,Terça-feira,00:00,04:00,04:30,07:30,Não,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,09:00
+026,TURNO NOT - PS,Quarta-feira,00:00,04:00,04:30,07:30,Não,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,09:00
+026,TURNO NOT - PS,Quinta-feira,00:00,04:00,04:30,07:30,Não,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,09:00
+026,TURNO NOT - PS,Sexta-feira,00:00,04:00,04:30,07:30,Não,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,09:00
+026,TURNO NOT - PS,Sábado,00:00,04:00,04:30,07:30,Não,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,09:00
+027,TURNO 03 - NOTURNO,Domingo,23:00,01:00,02:00,07:20,Não,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,08:00
+027,TURNO 03 - NOTURNO,Segunda-feira,23:00,01:00,02:00,07:20,Não,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,08:00
+027,TURNO 03 - NOTURNO,Terça-feira,23:00,01:00,02:00,07:20,Não,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,08:00
+027,TURNO 03 - NOTURNO,Quarta-feira,23:00,01:00,02:00,07:20,Não,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,08:00
+027,TURNO 03 - NOTURNO,Quinta-feira,23:00,01:00,02:00,07:20,Não,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,08:00
+027,TURNO 03 - NOTURNO,Sexta-feira,23:00,01:00,02:00,07:20,Não,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,08:00
+027,TURNO 03 - NOTURNO,Sábado,23:00,01:00,02:00,07:20,Não,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,08:00
+032,TURNO 2 - 07:20H (DIA),Domingo,06:00,10:00,11:00,14:20,Não,Sim,Não,10:00,11:00,Sim,23:59,Ativo,Semanal,Não,Não,03:00
+032,TURNO 2 - 07:20H (DIA),Segunda-feira,06:00,10:00,11:00,14:20,Não,Sim,Não,10:00,11:00,Sim,23:59,Ativo,Semanal,Não,Não,03:00
+032,TURNO 2 - 07:20H (DIA),Terça-feira,06:00,10:00,11:00,14:20,Não,Sim,Não,10:00,11:00,Sim,23:59,Ativo,Semanal,Não,Não,03:00
+032,TURNO 2 - 07:20H (DIA),Quarta-feira,06:00,10:00,11:00,14:20,Não,Sim,Não,10:00,11:00,Sim,23:59,Ativo,Semanal,Não,Não,03:00
+032,TURNO 2 - 07:20H (DIA),Quinta-feira,06:00,10:00,11:00,14:20,Não,Sim,Não,10:00,11:00,Sim,23:59,Ativo,Semanal,Não,Não,03:00
+032,TURNO 2 - 07:20H (DIA),Sexta-feira,06:00,10:00,11:00,14:20,Não,Sim,Não,10:00,11:00,Sim,23:59,Ativo,Semanal,Não,Não,03:00
+032,TURNO 2 - 07:20H (DIA),Sábado,06:00,10:00,11:00,14:20,Não,Sim,Não,10:00,11:00,Sim,23:59,Ativo,Semanal,Não,Não,03:00
+045,30h ESTÁGIO,Domingo,,,,,Não,Sim,Não,,,Sim,00:00,Ativo,Semanal,Não,Não,23:59
+045,30h ESTÁGIO,Segunda-feira,,,,,Não,Sim,Não,,,Sim,00:00,Ativo,Semanal,Não,Não,23:59
+045,30h ESTÁGIO,Terça-feira,08:00,11:45,12:00,14:15,Não,Sim,Não,11:45,12:00,Sim,23:59,Ativo,Semanal,Não,Não,23:59
+045,30h ESTÁGIO,Quarta-feira,08:00,11:45,12:00,14:15,Não,Sim,Não,11:45,12:00,Sim,23:59,Ativo,Semanal,Não,Não,23:59
+045,30h ESTÁGIO,Quinta-feira,08:00,11:45,12:00,14:15,Não,Sim,Não,11:45,12:00,Sim,23:59,Ativo,Semanal,Não,Não,23:59
+045,30h ESTÁGIO,Sexta-feira,08:00,11:45,12:00,14:15,Não,Sim,Não,11:45,12:00,Sim,23:59,Ativo,Semanal,Não,Não,23:59
+045,30h ESTÁGIO,Sábado,08:00,11:45,12:00,14:15,Não,Sim,Não,11:45,12:00,Sim,23:59,Ativo,Semanal,Não,Não,23:59
+046,APRENDIZ 16 (IN),Domingo,,,,,Não,Sim,Não,,,Sim,02:00,Ativo,Semanal,Não,Não,23:59
+046,APRENDIZ 16 (IN),Segunda-feira,08:00,10:00,10:15,12:00,Não,Sim,Não,,,Sim,02:00,Ativo,Semanal,Não,Não,23:59
+046,APRENDIZ 16 (IN),Terça-feira,08:00,10:00,10:15,12:00,Não,Sim,Não,,,Sim,02:00,Ativo,Semanal,Não,Não,23:59
+046,APRENDIZ 16 (IN),Quarta-feira,08:00,10:00,10:15,12:00,Não,Sim,Não,,,Sim,02:00,Ativo,Semanal,Não,Não,23:59
+046,APRENDIZ 16 (IN),Quinta-feira,,,,,Não,Sim,Não,,,Sim,02:00,Ativo,Semanal,Não,Não,23:59
+046,APRENDIZ 16 (IN),Sexta-feira,08:00,10:00,10:15,12:00,Não,Sim,Não,,,Sim,02:00,Ativo,Semanal,Não,Não,23:59
+046,APRENDIZ 16 (IN),Sábado,,,,,Não,Sim,Não,,,Sim,02:00,Ativo,Semanal,Não,Não,23:59
+0047,ADM-RH,Domingo,,,,,Não,Sim,Não,,,Sim,02:00,Ativo,Semanal,Não,Não,23:59
+0047,ADM-RH,Segunda-feira,08:00,12:00,13:00,18:00,Não,Sim,Não,,,Sim,02:00,Ativo,Semanal,Não,Não,23:59
+0047,ADM-RH,Terça-feira,08:00,12:00,13:00,18:00,Não,Sim,Não,,,Sim,02:00,Ativo,Semanal,Não,Não,23:59
+0047,ADM-RH,Quarta-feira,08:00,12:00,13:00,18:00,Não,Sim,Não,,,Sim,02:00,Ativo,Semanal,Não,Não,23:59
+0047,ADM-RH,Quinta-feira,08:00,12:00,13:00,18:00,Não,Sim,Não,,,Sim,02:00,Ativo,Semanal,Não,Não,23:59
+0047,ADM-RH,Sexta-feira,08:00,12:00,13:00,18:00,Não,Sim,Não,,,Sim,02:00,Ativo,Semanal,Não,Não,23:59
+0047,ADM-RH,Sábado,,,,,Não,Sim,Não,,,Sim,02:00,Ativo,Semanal,Não,Não,23:59
+047,DOMINGO 12H,Domingo,08:00,20:00,,,Sim,Sim,Não,,,Sim,02:00,Ativo,Semanal,Não,Não,23:59
+047,DOMINGO 12H,Segunda-feira,,,,,Sim,Sim,Não,,,Sim,02:00,Ativo,Semanal,Não,Não,23:59
+047,DOMINGO 12H,Terça-feira,,,,,Sim,Sim,Não,,,Sim,02:00,Ativo,Semanal,Não,Não,23:59
+047,DOMINGO 12H,Quarta-feira,,,,,Sim,Sim,Não,,,Sim,02:00,Ativo,Semanal,Não,Não,23:59
+047,DOMINGO 12H,Quinta-feira,,,,,Sim,Sim,Não,,,Sim,02:00,Ativo,Semanal,Não,Não,23:59
+047,DOMINGO 12H,Sexta-feira,,,,,Sim,Sim,Não,,,Sim,02:00,Ativo,Semanal,Não,Não,23:59
+047,DOMINGO 12H,Sábado,,,,,Sim,Sim,Não,,,Sim,02:00,Ativo,Semanal,Não,Não,23:59
+0048,APRENDIZ-TO(1),Domingo,,,,,Não,Sim,Não,,,Sim,02:00,Ativo,Semanal,Não,Não,23:59
+0048,APRENDIZ-TO(1),Segunda-feira,08:00,12:00,,,Não,Sim,Não,,,Sim,02:00,Ativo,Semanal,Não,Não,23:59
+0048,APRENDIZ-TO(1),Terça-feira,08:00,12:00,,,Não,Sim,Não,,,Sim,02:00,Ativo,Semanal,Não,Não,23:59
+0048,APRENDIZ-TO(1),Quarta-feira,08:00,12:00,,,Não,Sim,Não,,,Sim,02:00,Ativo,Semanal,Não,Não,23:59
+0048,APRENDIZ-TO(1),Quinta-feira,08:00,12:00,,,Não,Sim,Não,,,Sim,02:00,Ativo,Semanal,Não,Não,23:59
+0048,APRENDIZ-TO(1),Sexta-feira,08:00,12:00,,,Não,Sim,Não,,,Sim,02:00,Ativo,Semanal,Não,Não,23:59
+0048,APRENDIZ-TO(1),Sábado,,,,,Não,Sim,Não,,,Sim,02:00,Ativo,Semanal,Não,Não,23:59
+0049,JOVEM APRENDIZ-TO(2),Domingo,,,,,Não,Sim,Não,,,Sim,02:00,Ativo,Semanal,Não,Não,23:59
+0049,JOVEM APRENDIZ-TO(2),Segunda-feira,14:00,18:00,,,Não,Sim,Não,,,Sim,02:00,Ativo,Semanal,Não,Não,23:59
+0049,JOVEM APRENDIZ-TO(2),Terça-feira,14:00,18:00,,,Não,Sim,Não,,,Sim,02:00,Ativo,Semanal,Não,Não,23:59
+0049,JOVEM APRENDIZ-TO(2),Quarta-feira,14:00,18:00,,,Não,Sim,Não,,,Sim,02:00,Ativo,Semanal,Não,Não,23:59
+0049,JOVEM APRENDIZ-TO(2),Quinta-feira,14:00,18:00,,,Não,Sim,Não,,,Sim,02:00,Ativo,Semanal,Não,Não,23:59
+0049,JOVEM APRENDIZ-TO(2),Sexta-feira,14:00,18:00,,,Não,Sim,Não,,,Sim,02:00,Ativo,Semanal,Não,Não,23:59
+0049,JOVEM APRENDIZ-TO(2),Sábado,,,,,Não,Sim,Não,,,Sim,02:00,Ativo,Semanal,Não,Não,23:59
+51,JOVEM APRENDIZ (16H_IS),Domingo,,,,,Não,Sim,Não,,,Sim,02:00,Ativo,Semanal,Não,Não,23:59
+51,JOVEM APRENDIZ (16H_IS),Segunda-feira,08:00,12:00,,,Não,Sim,Não,,,Sim,02:00,Ativo,Semanal,Não,Não,23:59
+51,JOVEM APRENDIZ (16H_IS),Terça-feira,08:00,12:00,,,Não,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,23:59
+51,JOVEM APRENDIZ (16H_IS),Quarta-feira,,,,,Não,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,23:59
+51,JOVEM APRENDIZ (16H_IS),Quinta-feira,,,,,Não,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,23:59
+51,JOVEM APRENDIZ (16H_IS),Sexta-feira,08:00,12:00,,,Não,Sim,Não,,,Sim,23:59,Ativo,Semanal,Não,Não,23:59
+51,JOVEM APRENDIZ (16H_IS),Sábado,08:00,12:00,,,Não,Sim,Não,,,Sim,02:00,Ativo,Semanal,Não,Não,23:59
+0052,FOLGUISTA - PS,Dia 1,,,,,Não,Sim,Não,,,Sim,23:59,Ativo,Customizado,Não,Não,12:00
+0052,FOLGUISTA - PS,Dia 2,00:00,02:00,02:30,07:30,Não,Sim,Não,,,Sim,23:59,Ativo,Customizado,Não,Não,23:59
+
+
+0.316942249

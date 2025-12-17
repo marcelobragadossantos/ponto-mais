@@ -1,0 +1,19 @@
+# Environment variables
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+.venv/
+ENV/
+env/
+
+# Uploads
+uploads/
+
+# Config (keep structure, ignore sensitive data)
+Config/schedules.json

@@ -1,0 +1,99 @@
+═══════════════════════════════════════════════════════════════════
+  INSTRUÇÕES - CONFIGURAÇÃO DO GOOGLE DRIVE
+═══════════════════════════════════════════════════════════════════
+
+📋 PASSO 1: Arquivo de Credenciais
+───────────────────────────────────────────────────────────────────
+
+Você já possui o arquivo JSON da service account?
+
+✅ SIM: 
+   1. Renomeie o arquivo para: google_service_account.json
+   2. Coloque nesta pasta (backend/Config/)
+   3. Pule para o PASSO 2
+
+❌ NÃO:
+   Siga o guia completo em: docs/GOOGLE_DRIVE_SETUP.md
+   Seções necessárias:
+   - 1. Criar Projeto no Google Cloud Console
+   - 2. Ativar Google Drive API
+   - 3. Criar Service Account
+   - 4. Gerar Chave JSON
+
+───────────────────────────────────────────────────────────────────
+
+📋 PASSO 2: Configurar Pasta no Google Drive
+───────────────────────────────────────────────────────────────────
+
+1. Abra o arquivo google_service_account.json
+2. Procure pela linha: "client_email": "..."
+3. Copie o email completo (ex: pontomais-bot@projeto.iam.gserviceaccount.com)
+
+4. Abra o Google Drive: https://drive.google.com
+5. Crie uma pasta (ex: "Relatórios Pontomais")
+6. Clique com botão direito → Compartilhar
+7. Cole o email da service account
+8. Dê permissão de "Editor"
+9. DESMARQUE "Notificar pessoas"
+10. Clique em "Compartilhar"
+
+───────────────────────────────────────────────────────────────────
+
+📋 PASSO 3: Obter ID da Pasta
+───────────────────────────────────────────────────────────────────
+
+1. Abra a pasta no Google Drive
+2. Olhe a URL no navegador:
+   https://drive.google.com/drive/folders/1ABC123xyz...
+                                           ^^^^^^^^^^^
+                                           Este é o ID
+
+3. Copie apenas a parte após /folders/
+   Exemplo: 1ABC123xyz...
+
+───────────────────────────────────────────────────────────────────
+
+📋 PASSO 4: Configurar no Sistema
+───────────────────────────────────────────────────────────────────
+
+1. Abra o arquivo: backend/.env
+2. Localize a linha: GOOGLE_DRIVE_FOLDER_ID=
+3. Cole o ID da pasta após o =
+   Exemplo: GOOGLE_DRIVE_FOLDER_ID=1ABC123xyz...
+4. Salve o arquivo
+5. Reinicie o backend (se estiver rodando)
+
+───────────────────────────────────────────────────────────────────
+
+✅ PRONTO!
+───────────────────────────────────────────────────────────────────
+
+Agora todos os relatórios serão automaticamente enviados para o
+Google Drive, organizados em pastas.
+
+Para testar a configuração:
+1. Abra um terminal na pasta backend
+2. Execute: python test_google_drive.py
+3. Verifique se todos os testes passam
+
+Se os testes passarem, teste com um relatório real:
+1. Reinicie o backend
+2. Vá em "Relatórios" no sistema web
+3. Baixe qualquer relatório
+4. Verifique os logs: "☁️ Arquivo enviado para Google Drive"
+5. Abra sua pasta no Drive e confirme
+
+IMPORTANTE: O upload é AUTOMÁTICO. Se configurado, TODOS os arquivos
+serão enviados para o Drive, independente da pasta local configurada.
+
+───────────────────────────────────────────────────────────────────
+
+🆘 PROBLEMAS?
+───────────────────────────────────────────────────────────────────
+
+Consulte o guia completo: docs/GOOGLE_DRIVE_SETUP.md
+Seção "Solução de Problemas"
+
+Ou verifique os logs do sistema (ícone no footer)
+
+═══════════════════════════════════════════════════════════════════

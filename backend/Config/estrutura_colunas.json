@@ -1,0 +1,103 @@
+{
+    "Absenteísmo": [
+        "Nome",
+        "Equipe",
+        "Previsto",
+        "Ausência",
+        "Presença",
+        "ABS"
+    ],
+    "Auditoria": [
+        "Nome",
+        "Data",
+        "Ocorrência",
+        "Valor",
+        "Equipe"
+    ],
+    "Banco de horas": [
+        "Nome",
+        "Equipe",
+        "Data",
+        "Saldo de B. H."
+    ],
+    "Jornada (espelho ponto)": [
+        "Data",
+        "Nome",
+        "Cargo",
+        "Equipe",
+        "Turno",
+        "Pontos",
+        "Totais da jornada",
+        "Total de H. extras",
+        "Saldo",
+        "Motivo/Observação"
+    ],
+    "Faltas": [
+        "Nome",
+        "Equipe",
+        "Data",
+        "Motivo"
+    ],
+    "Solicitações": [
+        "Nome",
+        "Cargo",
+        "Equipe",
+        "Data",
+        "Pontos",
+        "Status",
+        "Tipo de solicitação",
+        "Quem aprovou/reprovou",
+        "Data da criação",
+        "Data da alteração",
+        "Observação",
+        "Motivo",
+        "É atestado?",
+        "CID",
+        "Motivo da reprovação"
+    ],
+    "Afastamentos e férias": [
+        "Nome",
+        "Equipe",
+        "Data inicial",
+        "Data final",
+        "Observação",
+        "Quant. de dias",
+        "É atestado?"
+    ],
+    "Assinaturas": [
+        "Nome",
+        "Equipe",
+        "Assinado?",
+        "Data da assinatura"
+    ],
+    "Colaboradores": [
+        "Nome",
+        "PIS",
+        "Cargo",
+        "Equipe",
+        "Turno",
+        "CPF",
+        "E-mail",
+        "Centro de custo",
+        "Data de admissão"
+    ],
+    "Turnos": [
+        "Código",
+        "Descrição",
+        "Dia",
+        "Horários",
+        "Ignora feriados",
+        "Intervalo flexível",
+        "Intervalo pré-assinalado",
+        "Intervalos principal",
+        "Jornada flexível",
+        "Limite de horas extras",
+        "Marcação por exceção",
+        "Status",
+        "Tipo",
+        "Tolerância em jornada flexível",
+        "Turno avançado",
+        "Virada do turno",
+        "Marcação por exceção"
+    ]
+}

@@ -1,0 +1,706 @@
+import os
+import time
+import shutil
+import re
+from datetime import datetime, timedelta
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.keys import Keys
+from enum import Enum
+from google_drive_service import GoogleDriveService
+
+class ReportStatus(Enum):
+    PENDING = "pending"
+    DOWNLOADING = "downloading"
+    PROCESSING = "processing"
+    COMPLETED = "completed"
+    ERROR = "error"
+
+class PontoMaisBot:
+    def __init__(self, config, colunas_config, log_callback=None, google_drive_config=None):
+        print("\n" + "="*60)
+        print("🤖 Inicializando PontoMais Bot...")
+        print("="*60)
+        
+        self.config = config
+        self.colunas_config = colunas_config
+        self.pasta_download = "C:\\temp_rels"
+        self.log_callback = log_callback
+        
+        # Inicializa Google Drive se configurado
+        self.google_drive_service = None
+        self.google_drive_enabled = False
+        self.google_drive_folder_id = None
+        
+        if google_drive_config and google_drive_config.get("enabled"):
+            try:
+                service_account_path = google_drive_config.get("service_account_path")
+                self.google_drive_folder_id = google_drive_config.get("folder_id")
+                
+                if service_account_path and os.path.exists(service_account_path) and self.google_drive_folder_id:
+                    self.google_drive_service = GoogleDriveService(service_account_path)
+                    self.google_drive_enabled = True
+                    print("✅ Google Drive integrado e ativo")
+                else:
+                    print("⚠️  Google Drive configurado mas credenciais/pasta não encontradas")
+            except Exception as e:
+                print(f"⚠️  Erro ao inicializar Google Drive: {str(e)}")
+                self.google_drive_enabled = False
+        
+        # Ensure download directory exists
+        print(f"📁 Criando pasta de download: {self.pasta_download}")
+        os.makedirs(self.pasta_download, exist_ok=True)
+        print("✅ Pasta de download criada/verificada")
+        
+        # Setup Chrome options
+        print("\n⚙️  Configurando opções do Chrome...")
+        chrome_options = Options()
+        chrome_options.add_argument("--start-maximized")
+        chrome_options.add_argument("--log-level=3")
+        
+        # Headless mode com argumentos necessários
+        chrome_options.add_argument("--headless=new")  # Novo modo headless
+        chrome_options.add_argument("--no-sandbox")
+        chrome_options.add_argument("--disable-dev-shm-usage")
+        chrome_options.add_argument("--disable-gpu")
+        chrome_options.add_argument("--disable-software-rasterizer")
+        chrome_options.add_argument("--window-size=1920,1080")  # Importante para headless
+        chrome_options.add_argument("--disable-blink-features=AutomationControlled")
+        chrome_options.add_experimental_option("excludeSwitches", ["enable-automation"])
+        chrome_options.add_experimental_option("useAutomationExtension", False)
+        chrome_options.add_experimental_option("prefs", {
+            "download.default_directory": self.pasta_download,
+            "download.prompt_for_download": False,
+            "download.directory_upgrade": True,
+            "safebrowsing.enabled": False
+        })
+        chrome_options.add_argument("--safebrowsing-disable-download-protection")
+        print("✅ Opções do Chrome configuradas (modo headless)")
+        
+        # Initialize WebDriver
+        print("\n🌐 Inicializando ChromeDriver...")
+        try:
+            # Método 1: Tenta usar ChromeDriver do PATH do sistema
+            print("   Tentativa 1: Usando ChromeDriver do sistema...")
+            try:
+                self.driver = webdriver.Chrome(options=chrome_options)
+                print("   ✅ ChromeDriver do sistema inicializado com sucesso!")
+            except Exception as e1:
+                print(f"   ❌ Falhou: {str(e1)}")
+                
+                # Método 2: Usa webdriver-manager para baixar/instalar
+                print("\n   Tentativa 2: Usando webdriver-manager...")
+                try:
+                    from webdriver_manager.chrome import ChromeDriverManager
+                    print("   📥 Baixando/verificando ChromeDriver...")
+                    driver_path = ChromeDriverManager().install()
+                    print(f"   📍 ChromeDriver localizado em: {driver_path}")
+                    
+                    self.driver = webdriver.Chrome(
+                        service=Service(driver_path),
+                        options=chrome_options
+                    )
+                    print("   ✅ ChromeDriver via webdriver-manager inicializado!")
+                except Exception as e2:
+                    print(f"   ❌ Falhou: {str(e2)}")
+                    raise Exception(
+                        f"Não foi possível inicializar o ChromeDriver.\n"
+                        f"Erro 1 (Sistema): {str(e1)}\n"
+                        f"Erro 2 (webdriver-manager): {str(e2)}\n\n"
+                        f"Soluções:\n"
+                        f"1. Verifique se o Google Chrome está instalado\n"
+                        f"2. Reinstale o Chrome: https://www.google.com/chrome/\n"
+                        f"3. Execute: pip install --upgrade webdriver-manager\n"
+                        f"4. Reinicie o terminal e tente novamente"
+                    )
+            
+            self.wait = WebDriverWait(self.driver, 10)
+            print("\n✅ Bot inicializado com sucesso!")
+            print("="*60 + "\n")
+            
+        except Exception as e:
+            print("\n❌ ERRO FATAL ao inicializar Bot")
+            print("="*60)
+            print(str(e))
+            print("="*60 + "\n")
+            raise
+    
+    def _wait_for_download_complete(self, check_interval=10):
+        """Aguarda conclusão do download"""
+        last_state = set(os.listdir(self.pasta_download))
+        start_time = time.time()
+        
+        while True:
+            time.sleep(check_interval)
+            current_state = set(os.listdir(self.pasta_download))
+            
+            new_files = current_state - last_state
+            
+            if new_files:
+                downloading = any(f.endswith('.crdownload') or f.endswith('.tmp') 
+                                for f in current_state)
+                if not downloading:
+                    return True
+            
+            last_state = current_state
+            
+            # Timeout após 2 horas
+            if time.time() - start_time > 7200:
+                raise TimeoutError("Download timeout")
+    
+    def login(self):
+        """Realiza login no sistema"""
+        print("\n🔐 Iniciando processo de login...")
+        try:
+            username = self.config["pontomais"]["auth"]["username"]
+            password = self.config["pontomais"]["auth"]["password"]
+            
+            if not username or not password:
+                print("❌ Credenciais não configuradas!")
+                raise ValueError("Credenciais não configuradas")
+            
+            print(f"👤 Usuário: {username}")
+            print("🌐 Acessando página de login...")
+            self.driver.get("https://app2.pontomais.com.br/login")
+            
+            print("⏳ Aguardando campos de login...")
+            username_field = self.wait.until(EC.presence_of_element_located(
+                (By.XPATH, '//*[@id="container-login"]/div[1]/div/div[4]/div[1]/login-form/pm-form/form/div/div/div[1]/pm-input/div/div/pm-text/div/input')
+            ))
+            password_field = self.driver.find_element(
+                By.XPATH, '//*[@id="container-login"]/div[1]/div/div[4]/div[1]/login-form/pm-form/form/div/div/div[2]/pm-input/div/div/pm-password/div/input'
+            )
+            
+            print("✍️  Preenchendo credenciais...")
+            username_field.send_keys(username)
+            password_field.send_keys(password)
+            
+            print("🔘 Clicando no botão de login...")
+            login_button = self.driver.find_element(
+                By.XPATH, '//*[@id="container-login"]/div[1]/div/div[4]/div[1]/login-form/pm-button[1]/button'
+            )
+            login_button.click()
+            
+            print("⏳ Aguardando redirecionamento...")
+            self.wait.until(EC.url_contains("meu-perfil"))
+            print("✅ Login realizado com sucesso!\n")
+            return True
+        except Exception as e:
+            print(f"❌ Erro no login: {str(e)}\n")
+            raise Exception(f"Erro no login: {str(e)}")
+    
+    def navigate_to_reports(self):
+        """Navega para página de relatórios"""
+        print("📊 Navegando para página de relatórios...")
+        try:
+            reports_url = self.config["pontomais"]["reports_url"]
+            print(f"🌐 URL: {reports_url}")
+            self.driver.get(reports_url)
+            
+            print("⏳ Aguardando página carregar...")
+            self.wait.until(EC.presence_of_element_located(
+                (By.XPATH, '//*[@id="relatorios-baixar"]/pm-drop-down/a/div/pm-button/button/span[1]')
+            ))
+            print("✅ Página de relatórios carregada!\n")
+            return True
+        except Exception as e:
+            print(f"❌ Erro ao navegar: {str(e)}\n")
+            raise Exception(f"Erro ao navegar para relatórios: {str(e)}")
+    
+    def download_report(self, report_name, start_date=None, end_date=None):
+        """Baixa relatório"""
+        print(f"\n📥 Iniciando download do relatório: {report_name}")
+        if start_date and end_date:
+            print(f"📅 Período: {start_date} a {end_date}")
+        try:
+            # Click on report dropdown
+            report_dropdown = self.wait.until(EC.element_to_be_clickable(
+                (By.XPATH, '//*[@id="undefined"]/div/div')
+            ))
+            report_dropdown.click()
+            time.sleep(1)
+            
+            # Select report
+            report_options = self.driver.find_elements(
+                By.XPATH, f"//div[contains(@class, 'ng-option')]//span[contains(text(), '{report_name}')]"
+            )
+            if not report_options:
+                report_options = self.driver.find_elements(
+                    By.XPATH, f"//div[contains(@class, 'ng-option')]//div[contains(text(), '{report_name}')]"
+                )
+            
+            if report_options:
+                report_options[0].click()
+            else:
+                actions = ActionChains(self.driver)
+                actions.send_keys(report_name)
+                actions.send_keys(Keys.ENTER)
+                actions.perform()
+            
+            # Set date range if needed
+            if start_date and end_date:
+                self._set_date_range(start_date, end_date)
+            
+            # Select columns
+            self._select_report_columns(report_name)
+            
+            # Download as CSV
+            format_dropdown = self.wait.until(EC.element_to_be_clickable(
+                (By.XPATH, '//*[@id="relatorios-baixar"]/pm-drop-down/a/div/pm-button/button')
+            ))
+            format_dropdown.click()
+            time.sleep(1)
+            
+            csv_option = self.wait.until(EC.element_to_be_clickable(
+                (By.XPATH, '//*[@id="relatorios-baixar-csv"]')
+            ))
+            csv_option.click()
+            
+            # Wait for download
+            self._wait_for_download_complete()
+            
+            # Move file to destination
+            downloaded_files = [f for f in os.listdir(self.pasta_download) if f.endswith('.csv')]
+            if not downloaded_files:
+                raise FileNotFoundError("Nenhum arquivo CSV encontrado")
+            
+            success = self._move_downloaded_file(report_name, downloaded_files[0], start_date)
+            return success
+            
+        except Exception as e:
+            raise Exception(f"Erro ao baixar relatório {report_name}: {str(e)}")
+    
+    def _select_report_columns(self, report_name):
+        """Seleciona colunas do relatório"""
+        try:
+            columns_button = self.wait.until(EC.element_to_be_clickable(
+                (By.XPATH, '/html/body/app-mfe-remote/app-side-nav-outer-toolbar/dx-drawer/div/div[2]/dx-scroll-view/div[1]/div/div[1]/div[2]/div[1]/app-container/reports/div/div[2]/div[1]/div/div[1]/pm-button/button')
+            ))
+            columns_button.click()
+            time.sleep(1)
+            
+            columns_to_select = self.colunas_config.get(report_name, [])
+            
+            if columns_to_select:
+                # Uncheck all
+                checkboxes = self.driver.find_elements(By.XPATH, "//input[@type='checkbox']")
+                for checkbox in checkboxes:
+                    if checkbox.is_selected():
+                        try:
+                            checkbox.click()
+                        except:
+                            try:
+                                self.driver.execute_script("arguments[0].click();", checkbox)
+                            except:
+                                continue
+                
+                # Select specified columns
+                for column_name in columns_to_select:
+                    xpath_patterns = [
+                        f"//label[contains(text(), '{column_name}')]",
+                        f"//label[normalize-space()='{column_name}']",
+                    ]
+                    
+                    for xpath in xpath_patterns:
+                        try:
+                            column_labels = self.driver.find_elements(By.XPATH, xpath)
+                            if column_labels:
+                                column_labels[0].click()
+                                break
+                        except:
+                            continue
+            
+            # Confirm
+            confirm_button = self.wait.until(EC.element_to_be_clickable(
+                (By.XPATH, '/html/body/ngb-modal-window/div/div/pm-modal-multi-select-modal/div[2]/div/div/div[2]/pm-button/button')
+            ))
+            confirm_button.click()
+            time.sleep(1)
+            
+        except Exception as e:
+            # Continue even if column selection fails
+            try:
+                close_buttons = self.driver.find_elements(
+                    By.XPATH, "//button[contains(text(), 'Fechar') or contains(text(), 'Close')]"
+                )
+                if close_buttons:
+                    close_buttons[0].click()
+            except:
+                pass
+    
+    def _set_date_range(self, start_date, end_date):
+        """Define período de datas"""
+        try:
+            if not start_date and not end_date:
+                return
+            
+            date_range = f"{start_date} - {end_date}"
+            
+            date_range_field = self.wait.until(EC.presence_of_element_located(
+                (By.XPATH, '/html/body/app-mfe-remote/app-side-nav-outer-toolbar/dx-drawer/div/div[2]/dx-scroll-view/div[1]/div/div[1]/div[2]/div[1]/app-container/reports/div/div[1]/div/pm-card/div/div[2]/pm-form/form/div[2]/div/div[3]/pm-input/div/div/pm-date-range/div/input')
+            ))
+            
+            self.driver.execute_script(
+                "arguments[0].removeAttribute('bsdaterangepicker');",
+                date_range_field
+            )
+            
+            date_range_field.clear()
+            date_range_field.send_keys(date_range)
+            date_range_field.send_keys(Keys.ENTER)
+            time.sleep(1)
+            
+        except Exception as e:
+            raise Exception(f"Erro ao definir período: {str(e)}")
+    
+    def _clean_filename(self, filename):
+        """
+        Remove ID do nome do arquivo baixado do Pontomais
+        Exemplo: "Pontomais_-_Auditoria_(01.10.2025_-_31.10.2025)_-_b6426913.csv"
+        Vira: "Pontomais_-_Auditoria_(01.10.2025_-_31.10.2025).csv"
+        
+        Args:
+            filename: Nome do arquivo original
+        
+        Returns:
+            Nome limpo sem ID
+        """
+        # Padrão: )_-_[ID].extensão
+        # Remove tudo entre o último ")" e a extensão se houver padrão _-_[hash]
+        pattern = r'\)_-_[a-f0-9]+(\.[a-zA-Z0-9]+)$'
+        cleaned = re.sub(pattern, r')\1', filename)
+        
+        return cleaned
+    
+    def _move_downloaded_file(self, report_name, downloaded_file, start_date=None):
+        """Move arquivo baixado para destino"""
+        try:
+            src_path = os.path.join(self.pasta_download, downloaded_file)
+            
+            # Define nome do arquivo de destino
+            if report_name == "Afastamentos e férias":
+                dest_filename = "Pontomais_-_Afastamentos_e_férias.csv"
+            elif report_name == "Colaboradores":
+                dest_filename = "Pontomais_-_Colaboradores.csv"
+            elif report_name == "Turnos":
+                dest_filename = "Pontomais_-_Turnos.csv"
+            elif report_name == "Assinaturas":
+                # Remove ID do nome do arquivo
+                dest_filename = self._clean_filename(downloaded_file)
+            else:
+                # Remove ID do nome do arquivo
+                dest_filename = self._clean_filename(downloaded_file)
+            
+            # Upload para Google Drive ANTES de mover para pasta final
+            if self.google_drive_enabled and self.google_drive_service:
+                try:
+                    # Cria estrutura de pastas no Drive
+                    drive_report_folder_id = self.google_drive_service.get_or_create_folder(
+                        report_name, 
+                        self.google_drive_folder_id
+                    )
+                    
+                    # Faz upload do arquivo
+                    self.google_drive_service.upload_file(
+                        src_path,
+                        drive_report_folder_id,
+                        dest_filename
+                    )
+                    print(f"☁️  Arquivo enviado para Google Drive: {dest_filename}")
+                except Exception as e:
+                    print(f"⚠️  Erro ao enviar para Google Drive: {str(e)}")
+                    # Continua mesmo se falhar o upload
+            
+            # Move para pasta local
+            dest_folder = self._get_destination_folder(report_name)
+            dest_path = os.path.join(dest_folder, dest_filename)
+            
+            if os.path.exists(dest_path):
+                try:
+                    os.remove(dest_path)
+                except PermissionError:
+                    return False
+            
+            shutil.move(src_path, dest_path)
+            
+            # Convert delimiter for Solicitações
+            if report_name == "Solicitações":
+                self._convert_csv_delimiter(dest_path)
+            
+            return True
+            
+        except Exception as e:
+            print(f"❌ Erro ao mover arquivo: {str(e)}")
+            return False
+    
+    def _get_destination_folder(self, report_name):
+        """Retorna pasta de destino"""
+        base_path = self.config["pontomais"].get("destine", "")
+        if not base_path:
+            raise ValueError("Pasta de destino não configurada")
+        
+        full_path = os.path.join(base_path, report_name)
+        os.makedirs(full_path, exist_ok=True)
+        return full_path
+    
+    def _convert_csv_delimiter(self, file_path):
+        """Converte delimitador CSV"""
+        try:
+            with open(file_path, 'r', encoding='utf-8') as file:
+                lines = file.readlines()
+            
+            processed_lines = []
+            
+            for i in range(4):
+                if i < len(lines):
+                    processed_lines.append(lines[i].strip())
+            
+            if len(lines) >= 5:
+                header = lines[4].strip().replace(',', ';')
+                header_columns = header.split(';')
+                
+                terceira_saida_index = -1
+                quarta_entrada_index = -1
+                
+                for i, col in enumerate(header_columns):
+                    if "3ª Saída" in col:
+                        terceira_saida_index = i
+                    if "4ª Entrada" in col:
+                        quarta_entrada_index = i
+                
+                if terceira_saida_index >= 0 and quarta_entrada_index == -1:
+                    header_columns.insert(terceira_saida_index + 1, "4ª Entrada")
+                    header_columns.insert(terceira_saida_index + 2, "4ª Saída")
+                    processed_lines.append(';'.join(header_columns))
+                    
+                    for line in lines[5:]:
+                        columns = line.strip().replace(',', ';').split(';')
+                        if len(columns) > 1:
+                            columns.insert(terceira_saida_index + 1, "")
+                            columns.insert(terceira_saida_index + 2, "")
+                            processed_lines.append(';'.join(columns))
+                else:
+                    processed_lines.append(header)
+                    for line in lines[5:]:
+                        if line.strip():
+                            processed_lines.append(line.strip().replace(',', ';'))
+            
+            with open(file_path, 'w', encoding='utf-8', newline='') as file:
+                file.write('\n'.join(processed_lines))
+            
+            return True
+        except Exception as e:
+            return False
+    
+    def _log(self, message):
+        """Helper para enviar logs"""
+        print(message)
+        if self.log_callback:
+            self.log_callback('info', message)
+    
+    def process_rescisao_employee(self, row):
+        """Processa rescisão de um funcionário"""
+        import pandas as pd
+        
+        nome = str(row["Nome"]).strip()
+        admissao = row["Admissão"]
+        demissao = row["Demissão"]
+        
+        print(f"\n{'='*60}")
+        print(f"📋 Processando: {nome}")
+        print(f"{'='*60}")
+        
+        if pd.isnull(admissao) or pd.isnull(demissao) or not nome:
+            print(f"❌ Dados incompletos para {nome}. Pulando.")
+            return False
+        
+        # Corrige o formato das datas
+        if isinstance(admissao, pd.Timestamp):
+            data_adm = admissao
+        else:
+            try:
+                # Remove espaços e tenta converter
+                admissao_str = str(admissao).strip()
+                print(f"🔍 Tentando converter admissão: '{admissao_str}'")
+                data_adm = datetime.strptime(admissao_str, "%d/%m/%Y")
+            except Exception as e:
+                print(f"❌ Data de admissão inválida: '{admissao}' - Erro: {str(e)}")
+                return False
+        
+        if isinstance(demissao, pd.Timestamp):
+            data_dem = demissao
+        else:
+            try:
+                # Remove espaços e tenta converter
+                demissao_str = str(demissao).strip()
+                print(f"🔍 Tentando converter demissão: '{demissao_str}'")
+                data_dem = datetime.strptime(demissao_str, "%d/%m/%Y")
+            except Exception as e:
+                print(f"❌ Data de demissão inválida: '{demissao}' - Erro: {str(e)}")
+                return False
+        
+        print(f"📅 Admissão: {data_adm.strftime('%d/%m/%Y')}")
+        print(f"📅 Demissão: {data_dem.strftime('%d/%m/%Y')}")
+        
+        # Gera lista de meses do início ao fim
+        meses = []
+        atual = data_adm.replace(day=1)
+        fim = data_dem.replace(day=1)
+        
+        while atual <= fim:
+            inicio = atual
+            if atual.month == 12:
+                ultimo = datetime(atual.year + 1, 1, 1) - timedelta(days=1)
+            else:
+                ultimo = datetime(atual.year, atual.month + 1, 1) - timedelta(days=1)
+            
+            meses.append((inicio, ultimo))
+            
+            if atual.month == 12:
+                atual = datetime(atual.year + 1, 1, 1)
+            else:
+                atual = datetime(atual.year, atual.month + 1, 1)
+        
+        print(f"📊 Total de meses a processar: {len(meses)}")
+        
+        pasta_rescisao = self.config.get("rescisao_pasta", "")
+        if not pasta_rescisao:
+            print("❌ Pasta de rescisão não configurada!")
+            return False
+        
+        for idx, (inicio, ultimo) in enumerate(meses, 1):
+            print(f"\n🔄 Processando mês {idx}/{len(meses)}: {inicio.strftime('%m/%Y')}")
+            
+            try:
+                # Navegar para página de controle de ponto
+                self._log("🌐 Navegando para página de controle de ponto...")
+                self.driver.get("https://app2.pontomais.com.br/controle-de-ponto/colaboradores/lista")
+                self._log("⏳ Aguardando página carregar...")
+                self.wait.until(EC.presence_of_element_located((By.TAG_NAME, "body")))
+                time.sleep(2)
+                self._log("✅ Página de controle de ponto carregada")
+                
+                # Clicar na aba de rescisão
+                self._log("📌 Clicando na aba Rescisão...")
+                rescisao_tab = self.wait.until(EC.element_to_be_clickable(
+                    (By.XPATH, '/html/body/app-mfe-remote/app-side-nav-outer-toolbar/dx-drawer/div/div[2]/dx-scroll-view/div[1]/div/div[1]/div[2]/div[1]/app-container/vrg-layout-time-card-control/div/div/div/pm-card/div/div[2]/vrg-tab-nav-router/div/a[3]')
+                ))
+                rescisao_tab.click()
+                time.sleep(2)
+                
+                # Preencher período
+                self._log(f"📅 Preenchendo período: {inicio.strftime('%d/%m/%Y')} - {ultimo.strftime('%d/%m/%Y')}")
+                campo_periodo = self.wait.until(EC.presence_of_element_located(
+                    (By.XPATH, '/html/body/app-mfe-remote/app-side-nav-outer-toolbar/dx-drawer/div/div[2]/dx-scroll-view/div[1]/div/div[1]/div[2]/div[1]/app-container/vrg-layout-time-card-control/div/div/div/pm-card/div/div[2]/vrg-time-card-control-closing/div/span[3]/vrg-closing-list/div[1]/form/div[2]/div/input')
+                ))
+                campo_periodo.clear()
+                campo_periodo.send_keys(f"{inicio.strftime('%d/%m/%Y')} - {ultimo.strftime('%d/%m/%Y')}")
+                
+                # Preencher nome
+                self._log(f"👤 Preenchendo nome: {nome}")
+                campo_nome = self.wait.until(EC.presence_of_element_located(
+                    (By.XPATH, '/html/body/app-mfe-remote/app-side-nav-outer-toolbar/dx-drawer/div/div[2]/dx-scroll-view/div[1]/div/div[1]/div[2]/div[1]/app-container/vrg-layout-time-card-control/div/div/div/pm-card/div/div[2]/vrg-time-card-control-closing/div/span[3]/vrg-closing-list/div[1]/form/div[1]/input')
+                ))
+                campo_nome.clear()
+                campo_nome.send_keys(nome)
+                time.sleep(3)
+                
+                # Clicar no botão de menu
+                self._log("🔍 Buscando colaborador...")
+                menu_buttons = self.driver.find_elements(By.CSS_SELECTOR, "button.pm-table-button-default")
+                if menu_buttons:
+                    self.driver.execute_script("arguments[0].click();", menu_buttons[0])
+                    time.sleep(2)
+                else:
+                    self._log("❌ Botão de menu não encontrado")
+                    continue
+                
+                # Selecionar opção "Visualizar"
+                self._log("👁️  Clicando em Visualizar...")
+                visualizar_links = self.driver.find_elements(By.XPATH, "//a[normalize-space(text())='Visualizar']")
+                if visualizar_links:
+                    self.driver.execute_script("arguments[0].click();", visualizar_links[0])
+                    time.sleep(5)
+                else:
+                    self._log("❌ Opção 'Visualizar' não encontrada")
+                    continue
+                
+                # Selecionar colaborador pelo nome
+                self._log(f"✅ Selecionando colaborador: {nome}")
+                colaborador_divs = self.driver.find_elements(By.XPATH, f"//div[@title='{nome}']")
+                if colaborador_divs:
+                    for div in colaborador_divs:
+                        try:
+                            checkbox = div.find_element(By.XPATH, "./preceding::input[@type='checkbox'][1]")
+                            self.driver.execute_script("arguments[0].click();", checkbox)
+                            break
+                        except Exception:
+                            continue
+                else:
+                    self._log(f"❌ Colaborador '{nome}' não encontrado na lista")
+                    continue
+                
+                # Clicar no botão de download
+                self._log("📥 Iniciando download...")
+                download_button = self.wait.until(EC.element_to_be_clickable(
+                    (By.XPATH, '/html/body/app-mfe-remote/app-side-nav-outer-toolbar/dx-drawer/div/div[2]/dx-scroll-view/div[1]/div/div[1]/div[2]/div[1]/app-container/vrg-pre-closing-view/div/div/div/pm-card/div/div[2]/vrg-closing-view-actions/pm-button[3]')
+                ))
+                download_button.click()
+                time.sleep(2)
+                
+                # Clicar no botão de download lateral
+                download_lateral = self.wait.until(EC.element_to_be_clickable(
+                    (By.XPATH, '/html/body/ngb-modal-window/div/div/vrg-download-query-aside/div/pm-button[2]')
+                ))
+                download_lateral.click()
+                
+                # Esperar download
+                self._log("⏳ Aguardando download...")
+                self._wait_for_download_complete()
+                
+                # Mover arquivo baixado
+                arquivos = [f for f in os.listdir(self.pasta_download) if f.endswith('.pdf')]
+                if not arquivos:
+                    print(f"   ❌ Nenhum arquivo PDF baixado")
+                    continue
+                
+                pasta_destino = os.path.join(pasta_rescisao, nome)
+                os.makedirs(pasta_destino, exist_ok=True)
+                
+                # Remove ID do nome do arquivo
+                # Exemplo: "arquivo_(01.01.2025_-_31.01.2025)_-_7ae9e4fc.pdf" 
+                # Vira: "arquivo_(01.01.2025_-_31.01.2025).pdf"
+                nome_original = arquivos[0]
+                import re
+                # Remove padrão: _-_[ID].pdf e substitui por .pdf
+                nome_limpo = re.sub(r'_-_[a-f0-9]+\.pdf$', '.pdf', nome_original)
+                
+                src = os.path.join(self.pasta_download, nome_original)
+                dst = os.path.join(pasta_destino, nome_limpo)
+                shutil.move(src, dst)
+                
+                self._log(f"✅ Arquivo salvo: {nome_limpo}")
+                print(f"   ✓ RESCISAO_MES_CONCLUIDO:{nome}:{idx}/{len(meses)}")
+                if self.log_callback:
+                    self.log_callback('success', f"RESCISAO_MES_CONCLUIDO:{nome}:{idx}/{len(meses)}")
+                
+            except Exception as e:
+                print(f"   ❌ Erro ao processar mês {inicio.strftime('%m/%Y')}: {str(e)}")
+                continue
+        
+        print(f"\n✅ Rescisão de {nome} concluída!")
+        print(f"{'='*60}\n")
+        return True
+    
+    def close(self):
+        """Fecha o navegador"""
+        try:
+            self.driver.quit()
+        except:
+            pass
